@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project default ="warTarget" basedir = ".">
+	<property name = "tomcat" value = "C:\Users\nitfv\Desktop\Working_Area\DynamicWorkspace\Apache\apache-tomcat-10.0.23"/>
+	<property name = "tomcat.deployment" value = "${tomcat}/webapps"/>
+	<property name = "tomcat.bin" value = "${tomcat}/bin"/>
+	<property name = "base" value = "."/>
+	<property name = "source" value = "${base}/src"/>
+	
+	
+	<target name = "warTarget">
+		<war warfile="mainwebapp.war" needxmlfile="false">
+			<fileset dir ="${source}/main/webapp/"/>
+		</war>
+		<!-- antcall target = "deployTarget" -->
+	</target>
+	
+	<target name = "deployTarget">
+		<copy file = "${base}/mainwebapp.war" todir="${tomcat.deployment}" />
+		<!--antcall target = "startTomcat"  -->
+	</target>
+	
+	<target name = "startTomcat">
+		<exec executable = "${tomcat.bin}/startup.bat" >
+			<env key = "CATALINA_HOME" value ="${tomcat}"/>
+		</exec>
+	</target>
+	
+	<target name = "stopTomcat">
+		<exec executable = "${tomcat.bin}/shutdown.bat" />
+			<env key = "CATALINA_HOME" value ="${tomcat}"/>
+	</target>
+	
+</project>
+	
+	
+	
